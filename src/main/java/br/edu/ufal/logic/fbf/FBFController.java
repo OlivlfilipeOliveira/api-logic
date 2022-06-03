@@ -51,7 +51,7 @@ public class FBFController {
 			@PathVariable String atomosQuantidade, @PathVariable String quantidadeFbfs,
 			@PathVariable String exatoPelomenos, @PathVariable String operadoresLista, 
 			@PathVariable String listasExercicios) throws IOException {
-		
+		System.out.println("cheguei nas formulas");
 		String quantAtomos = "";
 
 		if (atomosQuantidade.equals("0")) {
@@ -143,6 +143,8 @@ public class FBFController {
 			File tmpAls = File.createTempFile("alloyFormula" + timestamp.getTime(), ".als");
 			tmpAls.deleteOnExit();
 			flushModelToFile(tmpAls, model);
+			System.out.println(model);			
+			System.out.println("Cheguei aqui");
 			{
 				CompModule world = CompUtil.parseEverything_fromFile(rep, null, tmpAls.getAbsolutePath());
 				A4Options opt = new A4Options();
@@ -152,7 +154,7 @@ public class FBFController {
 
 				A4Solution sol = TranslateAlloyToKodkod.execute_commandFromBook(rep, world.getAllReachableSigs(), cmd,
 						opt);
-
+				System.out.println("Passei pra cá");
 				while (sol.satisfiable()) {
 					InstanciaRetorno ir = util.montarInstancia(sol.toString());
 					FBF fbf = util.montaFBF(ir.getMainOperator(), ir.getOperators(), ir.getNotRelacao(),
